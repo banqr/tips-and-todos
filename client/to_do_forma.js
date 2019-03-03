@@ -1,5 +1,6 @@
 const toDo_forma = document.querySelector("form")
 const API_TODO_URL = 'http://localhost:5000/todos'
+import { postForm } from './utils.js'
 
 toDo_forma.addEventListener('submit', (event) => {
     event.preventDefault()
@@ -14,7 +15,7 @@ toDo_forma.addEventListener('submit', (event) => {
     
         console.log(data);
         
-        postTodo(API_TODO_URL, data)
+        postForm(API_TODO_URL, data, 'POST')
     
         toDo_forma.reset()
     }else{
@@ -23,13 +24,3 @@ toDo_forma.addEventListener('submit', (event) => {
     
 })
 
-const postTodo = (url, data) => {
-    const obj = {
-        method: 'POST',
-        body: JSON.stringify(data),
-        headers: {
-            'content-type': 'application/json'
-        }
-    }
-    return fetch(url, obj)
-}

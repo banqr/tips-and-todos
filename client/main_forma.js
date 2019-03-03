@@ -1,5 +1,6 @@
 const forma = document.querySelector("form")
 const API_TIP_URL = 'http://localhost:5000/tips'
+import { postForm } from './utils.js'
 
 forma.addEventListener('submit', (event) => {
     event.preventDefault()
@@ -19,7 +20,7 @@ forma.addEventListener('submit', (event) => {
         }
         console.log(data)
         
-        postTip(API_TIP_URL, data, 'POST')
+        postForm(API_TIP_URL, data, 'POST')
         
         forma.reset()
 
@@ -29,13 +30,3 @@ forma.addEventListener('submit', (event) => {
     
 })
 
-const postTip = (url, postData, method) => {
-    const obj = {
-        method: method,
-        body: JSON.stringify(postData),
-        headers: {
-            'content-type': 'application/json'
-        }
-    }
-    return fetch(url, obj)
-}
