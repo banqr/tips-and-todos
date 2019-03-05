@@ -1,6 +1,8 @@
 const express = require("express")
+const Joi = require('joi')
 const routes = express.Router()
 const db = require('./db/connection')
+const schema_tips = require('./db/joi_schema')
 const db_utils = require('./db/db_utils')
 
 //Home route
@@ -34,14 +36,20 @@ routes.get('/insert_languages', (req, res) => {
 /******** Rute za tips **********/
 routes.post('/tips', (req, res) => {
     const data = req.body
+    //const result = Joi.validate(data, schema_tips.schema_tips)
     
-    data.vreme = new Date()
-    data.author = 'Radovan'
-    
-    //tip.insertTip(data)
-    const tips = 'tips'
-    db_utils.insertData(db, tips, data)
-    res.send('Ok baby!')
+    if (Joi.validate(data, schema_tips.schema_tips).error === null){    
+        data.vreme = new Date()
+        data.author = 'Radovan'
+        
+        //tip.insertTip(data)
+        const tips = 'tips'
+        db_utils.insertData(db, tips, data)
+        res.send('Ok baby!')
+    }
+    else {
+        return Promise.reject(result.error)
+    }
 })
 
 routes.get('/tips', (req, res) => {
@@ -57,7 +65,7 @@ routes.delete('/tips/:id', (req, res) => {
     const tips = 'tips'
 
     db_utils.deleteData(db, tips, id)
-    
+
     res.send('Ok madafaka!')
 })
 /*************************************************/
