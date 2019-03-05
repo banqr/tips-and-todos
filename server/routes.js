@@ -51,6 +51,15 @@ routes.get('/tips', (req, res) => {
             res.json(data)
         })
 })
+
+routes.delete('/tips/:id', (req, res) => {
+    const id = req.params.id
+    const tips = 'tips'
+
+    db_utils.deleteData(db, tips, id)
+    
+    res.send('Ok madafaka!')
+})
 /*************************************************/
 
 /* Rute za todos */
@@ -72,6 +81,15 @@ routes.get('/todos', (req, res) => {
         .then(data => {
             res.json(data)
         })
+})
+
+routes.delete('/todos/:id', (req, res) => {
+    const id = req.params.id
+    const todos = 'todos'
+
+    db_utils.deleteData(db, todos, id)
+
+    res.send('Obrisao todo')
 })
 
 /**************************************************/

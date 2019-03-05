@@ -18,7 +18,19 @@ const getData = (db, collection) => {
     return kolekcija.find()
 }
 
+/*Treba mi f-ja koja briše obj iz kolekcije */
+/*Ta f-ja treba da ima parametre db, kolekcija i id iz mongo objekta */
+
+const deleteData = (db, collection, id) => {
+    //document => db.languages.remove({name: "C++"})
+    const kolekcija = db.get(collection)
+    const mongo_id = id
+    
+    return kolekcija.remove({_id: mongo_id})
+}
+
 module.exports = {
     insertData,
-    getData
+    getData,
+    deleteData
 }
