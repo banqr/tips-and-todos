@@ -46,12 +46,10 @@ const schema_tips = Joi.object().keys({
 
 routes.post('/tips', (req, res) => {
     const data = req.body
-     
-    //data.vreme = new Date()
-    //data.author = 'Radovan'
-        
+
     const tips = 'tips'
-    db_utils.insertData(db, tips, data, schema_tips)
+
+    db_utils.insertData(db, tips, data, schema_tips, Joi)
         .then(result => {
             res.json(result)
         }).catch(error => {
@@ -80,16 +78,24 @@ routes.delete('/tips/:id', (req, res) => {
 /*************************************************/
 
 /* Rute za todos */
+
+const schema_todos = Joi.object().keys({
+    to_do: Joi.string().min(1).required()
+})
+
 routes.post('/todos', (req, res) => {
     const data = req.body
 
-    data.vreme = new Date()
-    data.author = 'Radovan'
-    //ovde ide f-ja sa ./db/todos todo.insertTodo(data)
-    //todo.insertTodo(data)
+
     const todos = 'todos'
-    db_utils.insertData(db, todos, data)
-    res.send('Ok')
+
+    db_utils.insertData(db, todos, data, schema_todos, Joi)
+        .then(result => {
+            res.json(result)
+        }).catch(error => {
+            res.status(500)
+            res.json(error)
+        })
 })
 
 routes.get('/todos', (req, res) => {

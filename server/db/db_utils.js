@@ -1,13 +1,13 @@
-const Joi = require('joi')
+//const Joi = require('joi')
 
 /*Treba mi f-ja koja upisuje json u kolekciju*/
 /*Ta f-ja treba da primi db, kolekciju i json obj */
 
 
 
-const insertData = (db, collection, data, schema) => {
+const insertData = (db, collection, data, schema, validator) => {
     
-    const result = Joi.validate(data, schema)
+    const result = validator.validate(data, schema)
     if (result.error === null){
         const kolekcija = db.get(collection)
         return kolekcija.insert(data)
