@@ -2,8 +2,11 @@ const express = require("express")
 const Joi = require('joi')
 const routes = express.Router()
 const db = require('./db/connection')
-const schema_tips = require('./db/joi_schema')
+//const schema_tips = require('./db/joi_schema')
 const db_utils = require('./db/db_utils')
+
+
+
 
 //Home route
 routes.get('/', (req, res) => {
@@ -34,23 +37,29 @@ routes.get('/insert_languages', (req, res) => {
 /*************************************************/
 
 /******** Rute za tips **********/
+
+const schema_tips = Joi.object().keys({
+    naslov: Joi.string().min(3).max(30).required(),
+    jezik: Joi.string().min(1).max(30).required(),
+    opis: Joi.string().min(1).required()
+})
+
 routes.post('/tips', (req, res) => {
     const data = req.body
-    //const result = Joi.validate(data, schema_tips.schema_tips)
-    
-    if (Joi.validate(data, schema_tips.schema_tips).error === null){    
-        data.vreme = new Date()
-        data.author = 'Radovan'
+     
+    //data.vreme = new Date()
+    //data.author = 'Radovan'
         
-        //tip.insertTip(data)
-        const tips = 'tips'
-        db_utils.insertData(db, tips, data)
-        res.send('Ok baby!')
-    }
-    else {
-        return Promise.reject(result.error)
-    }
-})
+    const tips = 'tips'
+    db_utils.insertData(db, tips, data, schema_tips)
+        .then(result => {
+            res.json(result)
+        }).catch(error => {
+            res.status(500)
+            res.json(error)
+        })
+    } 
+)
 
 routes.get('/tips', (req, res) => {
     const tips = 'tips'

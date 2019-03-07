@@ -1,12 +1,20 @@
-//const db = require('./connection')
+const Joi = require('joi')
 
 /*Treba mi f-ja koja upisuje json u kolekciju*/
 /*Ta f-ja treba da primi db, kolekciju i json obj */
 
-const insertData = (db, collection, data) => {
-    const kolekcija = db.get(collection)
 
-    return kolekcija.insert(data)
+
+const insertData = (db, collection, data, schema) => {
+    
+    const result = Joi.validate(data, schema)
+    if (result.error === null){
+        const kolekcija = db.get(collection)
+        return kolekcija.insert(data)
+    }else{
+        return Promise.reject(result.error)
+    }
+    
 }
 
 /*Treba mi f-ja koja vraća kolekciju*/
