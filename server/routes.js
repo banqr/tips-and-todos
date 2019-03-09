@@ -86,7 +86,6 @@ const schema_todos = Joi.object().keys({
 routes.post('/todos', (req, res) => {
     const data = req.body
 
-
     const todos = 'todos'
 
     db_utils.insertData(db, todos, data, schema_todos, Joi)

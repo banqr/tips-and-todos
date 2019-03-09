@@ -9,3 +9,14 @@ export function postForm(url, data, method){
 
     return fetch(url, post_obj)
 }
+
+export async function callAPI(url_server){
+    try {
+        const response = await fetch(url_server)
+        return response.json()
+    } catch (error) {
+        console.log(`Greška je ${error}`)
+    }
+}
+
+

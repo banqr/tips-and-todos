@@ -8,13 +8,13 @@
 const insertData = (db, collection, data, schema, validator) => {
     
     const result = validator.validate(data, schema)
+
     if (result.error === null){
         const kolekcija = db.get(collection)
         return kolekcija.insert(data)
     }else{
         return Promise.reject(result.error)
     }
-    
 }
 
 /*Treba mi f-ja koja vraća kolekciju*/

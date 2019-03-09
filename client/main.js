@@ -1,13 +1,6 @@
 const selektor = document.querySelector('#selektor')
 const API_URL = 'http://localhost:5000/insert_languages'
-
-/* Ovde samo pozivam languages kolekciju za glavnu formu sa url-a iznad!*/
-const poziv_prog_jezik = async (url_server) => {
-    const response = await fetch(url_server)
-    const data = await response.json()
-
-    kreiraj_listu(data)
-}
+import { callAPI } from './utils.js'
 
 /* Ovde kreiram option tagove za select na maim formi!*/
 const kreiraj_listu = (data) => {
@@ -21,4 +14,8 @@ const kreiraj_listu = (data) => {
     })
 }
 
-poziv_prog_jezik(API_URL)
+callAPI(API_URL)
+    .then(result => kreiraj_listu(result))
+    .catch(error => {
+        console.log('Oh shit, no result!')
+    })
