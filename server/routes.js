@@ -115,5 +115,19 @@ routes.delete('/todos/:id', (req, res) => {
 })
 
 /**************************************************/
+
+/* Ruta za pregled po tipu jezika/okruženja */
+
+routes.get('/tips/:jezik', (req, res) => {
+    const jezik = req.params.jezik
+    const tips = 'tips'
+    
+    db_utils.getData(db, tips, jezik)
+        .then(result => res.json(result))
+})
+
+/***************************************************/
+
+
 module.exports = routes
 

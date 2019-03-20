@@ -20,10 +20,17 @@ const insertData = (db, collection, data, schema, validator) => {
 /*Treba mi f-ja koja vraća kolekciju*/
 /*Ta f-ja treba da primi db i kolekciju */
 
-const getData = (db, collection) => {
+const getData = (db, collection, prop) => {
     const kolekcija = db.get(collection)
-
-    return kolekcija.find()
+    if (prop) {
+        const obj = {
+            jezik: prop
+        }
+        return kolekcija.find(obj)
+    }else{
+        return kolekcija.find()
+    }
+    
 }
 
 /*Treba mi f-ja koja briše obj iz kolekcije */
