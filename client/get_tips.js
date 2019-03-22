@@ -51,7 +51,7 @@ const kreiraj_tips = (data) => {
 
 
 
-callAPI(API_URL)
+callAPI(API_URL_DEL + 'Python')
     .then(result => kreiraj_tips(result))
     .then(() => console.log('uspeh!'))
     .catch(err => {

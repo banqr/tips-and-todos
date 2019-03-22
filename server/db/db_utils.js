@@ -22,6 +22,7 @@ const insertData = (db, collection, data, schema, validator) => {
 
 const getData = (db, collection, prop) => {
     const kolekcija = db.get(collection)
+    
     if (prop) {
         const obj = {
             jezik: prop
